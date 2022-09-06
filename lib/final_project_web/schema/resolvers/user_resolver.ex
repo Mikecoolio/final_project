@@ -11,6 +11,11 @@ defmodule FinalProjectWeb.Schema.Resolvers.UserResolver do
         {:errors, errors}
 
       {_, _} -> {:error, Constants.internal_server_error()}
+    end
   end
-end
+
+  def get_all_users(_, _, _) do
+    {:ok, Auth.list_users()}
+  end
+
 end
