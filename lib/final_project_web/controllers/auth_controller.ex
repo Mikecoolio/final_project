@@ -5,9 +5,11 @@ defmodule FinalProjectWeb.AuthController do
     render(conn, "acknowledge.json", %{message: "hello testing"})
   end
 
-  # def register(conn, params) do
+  def register(conn, params) do
+    IO.puts("params: ")
+    IO.inspect(params)
+    render(conn, "acknowledge.json", %{message: "hello testing"})
+  end
 
-  # end
 
-  
 end
