@@ -4,14 +4,14 @@ defmodule FinalProjectWeb.Router do
   alias FinalProjectWeb.Plugs.PopulateAuth
   alias FinalProjectWeb.Plugs.ProtectGraphQL
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {FinalProjectWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
+  # pipeline :browser do
+  #   plug :accepts, ["html"]
+  #   plug :fetch_session
+  #   plug :fetch_live_flash
+  #   plug :put_root_layout, {FinalProjectWeb.LayoutView, :root}
+  #   plug :protect_from_forgery
+  #   plug :put_secure_browser_headers
+  # end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -27,23 +27,26 @@ defmodule FinalProjectWeb.Router do
 
   scope "/api/" do
     pipe_through :api
+
     get "/auth/test", AuthController, :test
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     delete "auth/logout", AuthController, :logout
   end
 
-  scope "/", FinalProjectWeb do
-    pipe_through :browser
+  # scope "/", FinalProjectWeb do
+  #   pipe_through :browser
 
-    get "/", PageController, :index
-  end
+  #   get "/", PageController, :index
+  # end
 
   scope "/api/graphql" do
-    pipe_through :api
+    pipe_through :graphql
+
     get "/", Absinthe.Plug.GraphiQL,
     schema: FinalProjectWeb.Schema,
     interface: :playground
+
     post "/", Absinthe.Plug,
     schema: FinalProjectWeb.Schema
   end
@@ -64,7 +67,8 @@ defmodule FinalProjectWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      # pipe_through :browser
+      pipe_through [:fetch_session, :protect_from_forgery]
 
       live_dashboard "/dashboard", metrics: FinalProjectWeb.Telemetry
     end
@@ -74,11 +78,11 @@ defmodule FinalProjectWeb.Router do
   #
   # Note that preview only shows emails that were sent by the same
   # node running the Phoenix server.
-  if Mix.env() == :dev do
-    scope "/dev" do
-      pipe_through :browser
+  # if Mix.env() == :dev do
+  #   scope "/dev" do
+  #     pipe_through :browser
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
+  #     forward "/mailbox", Plug.Swoosh.MailboxPreview
+  #   end
+  # end
 end

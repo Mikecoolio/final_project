@@ -16,10 +16,9 @@ defmodule FinalProjectWeb.Schema.Resolvers.UserResolver do
   #   end
   # end
 
-  #def get_all_users(_, _, %{context: context}) do
-  def get_all_users(_, _, _) do
-    IO.puts("getting all users...")
-    # IO.insepct(context)
+  def get_all_users(_, _, %{context: context}) do
+    IO.puts("getting all users (looking at context)...")
+    IO.inspect(context)
     users = Auth.list_users()
     {:ok, users}
   end
