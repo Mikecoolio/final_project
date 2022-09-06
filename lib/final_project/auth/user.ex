@@ -19,6 +19,7 @@ defmodule FinalProject.Auth.User do
     |> unique_constraint(:username)
     |> unique_constraint(:email)
     |> update_change(:email, fn email -> String.downcase(email) end)
+    |> update_change(:username, fn username -> String.downcase(username) end)
     |> validate_length(:username, min: 3, max: 35)
     |> validate_length(:password, min: 3, max: 40)
     |> validate_format(:email, ~r/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
