@@ -20,6 +20,15 @@ defmodule FinalProjectWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api/graphql" do
+    pipe_through :api
+    get "/", Absinthe.Plug.GraphiQL,
+    schema: FinalProjectWeb.Schema,
+    interface: :playground
+    post "/", Absinthe.Plug,
+    schema: FinalProjectWeb.Schema
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FinalProjectWeb do
   #   pipe_through :api
