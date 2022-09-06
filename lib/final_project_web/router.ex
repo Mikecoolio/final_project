@@ -27,6 +27,7 @@ defmodule FinalProjectWeb.Router do
     get "/auth/test", AuthController, :test
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
+    delete "auth/logout", AuthController, :logout
   end
 
   scope "/", FinalProjectWeb do

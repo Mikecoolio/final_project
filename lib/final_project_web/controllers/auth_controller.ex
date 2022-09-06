@@ -59,14 +59,20 @@ defmodule FinalProjectWeb.AuthController do
           render(conn, "errors.json", %{errors: Constants.invalid_credentials()})
       end
 
+    # {%Ecto.Changeset{valid?: false} = changeset} ->
+    {:error, %Ecto.Changeset{} = changeset} ->
+      render(conn, "errors.json", %{
+        errors: Utils.format_changeset_errors(changeset)
+      })
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "errors.json", %{
-          errors: Utils.format_changeset_errors(changeset)
-        })
-
-      {_, _} ->
-        render(conn, "errors.json", %{message: Constants.internal_server_error()})
+    {_, _} ->
+      render(conn, "errors.json", %{message: Constants.internal_server_error()})
     end
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> Plug.Conn.clear_session()
+    |> render("acknowledge.json", %{message: "Logged Out"})
   end
 end
