@@ -17,12 +17,11 @@ defmodule FinalProjectWeb.AuthController do
 
         {:error, %Ecto.Changeset{} = changeset} ->
           render(conn, "errors.json", %{
-           success: false,
            errors: Utils.format_changeset_errors(changeset)
         })
 
         {_, _} ->
-          render(conn, "errors.json", %{success: false, message: Constants.internal_server_error()})
+          render(conn, "errors.json", %{message: Constants.internal_server_error()})
     end
   end
 
