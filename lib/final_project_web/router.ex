@@ -1,6 +1,7 @@
 defmodule FinalProjectWeb.Router do
   use FinalProjectWeb, :router
   alias FinalProjectWeb.AuthController
+  alias FinalProjectWeb.Plugs.PopulateAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,6 +14,8 @@ defmodule FinalProjectWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug PopulateAuth
   end
 
   pipeline :graphql do
@@ -22,8 +25,7 @@ defmodule FinalProjectWeb.Router do
   scope "/api/" do
     pipe_through :api
     get "/auth/test", AuthController, :test
-    post "/auth/register",
-    AuthController, :register
+    post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
   end
 
