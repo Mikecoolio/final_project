@@ -7,6 +7,8 @@ defmodule FinalProjectWeb.AuthController do
   alias FinalProjectWeb.Utils
   alias FinalProjectWeb.Constants
 
+  plug :prevent_exploits when action in [:login]
+  plug :prevent_consecutive_unauthorized_actions when action in [:logout]
 
   def test(conn, _params) do
     render(conn, "acknowledge.json", %{message: "hello testing"})
@@ -74,5 +76,29 @@ defmodule FinalProjectWeb.AuthController do
     conn
     |> Plug.Conn.clear_session()
     |> render("acknowledge.json", %{message: "Logged Out"})
+  end
+
+  # https://hexdocs.pm/plug/Plug.Conn.html#module-request-fields
+  # if the user is signed in then keep the connection else close the connection
+  defp prevent_consecutive_unauthorized_actions(conn, _params) do
+    if conn.assigns.user_signed_in? do
+      conn
+    else
+      send_resp(conn, 401, Constants.not_authenticated())
+
+      conn
+      |> halt()
+    end
+  end
+
+  defp prevent_exploits(conn, _params) do
+    if conn.assigns.user_signed_in? do
+      conn
+    else
+      send_resp(conn, 401, Constants.not_authorized())
+
+      conn
+      |> halt()
+    end
   end
 end
