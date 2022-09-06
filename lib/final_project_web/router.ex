@@ -29,6 +29,7 @@ defmodule FinalProjectWeb.Router do
     pipe_through :api
 
     get "/auth/test", AuthController, :test
+    get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     delete "auth/logout", AuthController, :logout

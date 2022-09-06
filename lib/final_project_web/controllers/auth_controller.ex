@@ -7,8 +7,8 @@ defmodule FinalProjectWeb.AuthController do
   alias FinalProjectWeb.Utils
   alias FinalProjectWeb.Constants
 
-  plug :prevent_exploits when action in [:login]
-  plug :prevent_consecutive_unauthorized_actions when action in [:logout]
+  plug :prevent_exploits when action in [:login, :register]
+  plug :prevent_consecutive_unauthorized_actions when action in [:logout, :get_current_logged_in_user]
 
   def test(conn, _params) do
     render(conn, "acknowledge.json", %{message: "hello testing"})
@@ -76,6 +76,10 @@ defmodule FinalProjectWeb.AuthController do
     conn
     |> Plug.Conn.clear_session()
     |> render("acknowledge.json", %{message: "Logged Out"})
+  end
+
+  def get_current_logged_in_user(conn, _params) do
+    render(conn, "get_current_logged_in_user.json", %{current_user: conn.assigns.current_user })
   end
 
   # https://hexdocs.pm/plug/Plug.Conn.html#module-request-fields
