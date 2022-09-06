@@ -93,12 +93,12 @@ defmodule FinalProjectWeb.AuthController do
 
   defp prevent_exploits(conn, _params) do
     if conn.assigns.user_signed_in? do
-      conn
-    else
       send_resp(conn, 401, Constants.not_authorized())
 
       conn
       |> halt()
+    else
+      conn
     end
   end
 end

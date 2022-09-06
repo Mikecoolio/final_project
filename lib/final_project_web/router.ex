@@ -2,6 +2,7 @@ defmodule FinalProjectWeb.Router do
   use FinalProjectWeb, :router
   alias FinalProjectWeb.AuthController
   alias FinalProjectWeb.Plugs.PopulateAuth
+  alias FinalProjectWeb.Plugs.ProtectGraphQL
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -20,6 +21,8 @@ defmodule FinalProjectWeb.Router do
 
   pipeline :graphql do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug ProtectGraphQL
   end
 
   scope "/api/" do
