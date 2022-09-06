@@ -1,5 +1,6 @@
 defmodule FinalProjectWeb.Router do
   use FinalProjectWeb, :router
+  alias FinalProjectWeb.AuthController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,6 +13,15 @@ defmodule FinalProjectWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :graphql do
+    plug :accepts, ["json"]
+  end
+
+  scope "/api/" do
+    pipe_through :api
+    get "/auth", AuthController, :index
   end
 
   scope "/", FinalProjectWeb do
