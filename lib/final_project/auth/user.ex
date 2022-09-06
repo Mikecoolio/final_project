@@ -23,4 +23,14 @@ defmodule FinalProject.Auth.User do
     |> validate_format(:email, ~r/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) # ~r/@/
     |> update_change(:email, fn email -> String.downcase(email) end)
   end
+
+  defp hash_password(%Ecto.Changeset{} = changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+        new_changeset = put_change(changeset, :password, Argon2.hash_pwd_salt(password))
+        # new_changeset
+
+      _ -> changeset
+    end
+  end
 end

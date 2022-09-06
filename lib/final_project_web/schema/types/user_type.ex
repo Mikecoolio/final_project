@@ -10,8 +10,8 @@ defmodule FinalProjectWeb.Schema.Types.UserType do
   end
 
   input_object :registration_input_type do
-    field :username, non_null(:string)
     field :email, non_null(:string)
-    field :password,non_null(:string)
+    field :username, non_null(:string)
+    field :password, non_null(:string)
   end
 end
