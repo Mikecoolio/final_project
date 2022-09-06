@@ -21,9 +21,10 @@ defmodule FinalProjectWeb.Router do
 
   scope "/api/" do
     pipe_through :api
-    # get "/auth", AuthController, :test
+    get "/auth/test", AuthController, :test
     post "/auth/register",
     AuthController, :register
+    post "/auth/login", AuthController, :login
   end
 
   scope "/", FinalProjectWeb do

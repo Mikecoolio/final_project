@@ -25,5 +25,15 @@ defmodule FinalProjectWeb.AuthController do
     end
   end
 
+  def login(conn, params) do
+    IO.puts("conn: ")
+    IO.inspect(conn)
+
+    IO.puts("params: ")
+    IO.inspect(params)
+
+    conn
+  end
+
 
 end
