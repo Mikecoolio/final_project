@@ -33,7 +33,7 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
         <form action="/api/auth/logout" method="POST">
           <input type="hidden" name="_method" value="DELETE" />
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input type="submit" value="Delete">
+          <input type="submit" value="Log Out">
         </form>
 
         <h1> Hello <%= @current_logged_in_user.username %> </h1>
