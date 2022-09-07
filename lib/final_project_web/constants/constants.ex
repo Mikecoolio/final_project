@@ -9,3 +9,6 @@ defmodule FinalProjectWeb.Constants do
   def invalid_credentials, do: @invalid_credentials
   def not_authenticated, do: @not_authenticated
 end
+
+
+

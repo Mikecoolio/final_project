@@ -3,18 +3,35 @@ defmodule FinalProjectWeb.Router do
   alias FinalProjectWeb.AuthController
   alias FinalProjectWeb.Plugs.PopulateAuth
   alias FinalProjectWeb.Plugs.ProtectGraphQL
+  alias FinalProjectWeb.Plugs.Redirector
 
-  # pipeline :browser do
-  #   plug :accepts, ["html"]
-  #   plug :fetch_session
-  #   plug :fetch_live_flash
-  #   plug :put_root_layout, {FinalProjectWeb.LayoutView, :root}
-  #   plug :protect_from_forgery
-  #   plug :put_secure_browser_headers
-  # end
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {FinalProjectWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    # plug Redirector
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    # get "/", PageController, :index
+    get "/auth/test", AuthController, :test
+    get "/", AuthController, :new_login
+    live "/show_all_users", FinalProjectWeb.ShowAllUsersLive
+    live "/show_currently_logged_in_user", FinalProjectWeb.ShowCurrentlyLoggedInUser
+    # get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user
+    # get "auth/login", AuthController, :random
+    # post "/auth/register", AuthController, :register
+    # post "/auth/login", AuthController, :login
+    # delete "auth/logout", AuthController, :logout
+  end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json", "html"]
     plug :fetch_session
     plug PopulateAuth
   end
@@ -25,6 +42,12 @@ defmodule FinalProjectWeb.Router do
     plug ProtectGraphQL
   end
 
+  # scope "/users/" do
+  #   pipe_through :browser
+
+  #   resources ""
+  # end
+
   scope "/api/" do
     pipe_through :api
 
@@ -32,14 +55,8 @@ defmodule FinalProjectWeb.Router do
     get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
-    delete "auth/logout", AuthController, :logout
+    delete "/auth/logout", AuthController, :logout
   end
-
-  # scope "/", FinalProjectWeb do
-  #   pipe_through :browser
-
-  #   get "/", PageController, :index
-  # end
 
   scope "/api/graphql" do
     pipe_through :graphql

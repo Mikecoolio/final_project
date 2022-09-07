@@ -49,7 +49,9 @@ defmodule FinalProject.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:argon2_elixir, "~> 3.0"},
+      {:argon2_elixir, "~> 3.0"}
+      # {:timex, "~> 3.7"},
+      # {:ex_cldr, "~> 2.33"},
 
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},

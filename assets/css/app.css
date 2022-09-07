@@ -118,3 +118,16 @@
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+.centerme {
+  max-width: 500px;
+  margin: auto;
+}
+
+#make-inline {
+  display: inline;
+}
+
+#show_all_users-btn{
+  color: white;
+}

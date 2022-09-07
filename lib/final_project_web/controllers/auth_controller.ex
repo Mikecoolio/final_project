@@ -14,12 +14,18 @@ defmodule FinalProjectWeb.AuthController do
     render(conn, "acknowledge.json", %{message: "hello testing"})
   end
 
+  def new_login(conn, _) do
+    render(conn, "new.html", error_message: nil)
+  end
+
+  # https://hexdocs.pm/phoenix_html/2.14.3/Phoenix.HTML.Form.html#module-with-changeset-data
+
   def register(conn, params) do
     case Auth.create_user(params) do
       {:ok, _} ->
         render(conn, "acknowledge.json", %{message: "User Registered!"})
 
-        {:error, %Ecto.Changeset{} = changeset} ->
+        {:error, changeset} ->
           render(conn, "errors.json", %{
            errors: Utils.format_changeset_errors(changeset)
         })
@@ -30,6 +36,7 @@ defmodule FinalProjectWeb.AuthController do
   end
 
   def login(conn, params) do
+    IO.inspect(params)
     # IO.puts("conn: ")
     # IO.inspect(conn)
 
@@ -51,8 +58,14 @@ defmodule FinalProjectWeb.AuthController do
             conn
             |> put_status(:created)
             |> put_session(:current_user_id, user.id)
-            |> render("acknowledge.json", %{message: "Logged In"})
+            |> redirect(to: "/show_all_users")
+            # |> render("acknowledge.json", %{message: "Logged In"})
 
+            # IO.puts("conn")
+            # IO.inspect(conn)
+
+            # IO.puts("user")
+            # IO.inspect(user)
           else
             render(conn, "errors.json", %{errors: Constants.invalid_credentials()})
           end
@@ -75,7 +88,8 @@ defmodule FinalProjectWeb.AuthController do
   def logout(conn, _params) do
     conn
     |> Plug.Conn.clear_session()
-    |> render("acknowledge.json", %{message: "Logged Out"})
+    |> redirect(to: "/")
+    # |> render("acknowledge.json", %{message: "Logged Out"})
   end
 
   def get_current_logged_in_user(conn, _params) do
@@ -102,6 +116,8 @@ defmodule FinalProjectWeb.AuthController do
       conn
       |> halt()
     else
+      IO.puts("conn")
+      IO.inspect(conn)
       conn
     end
   end
