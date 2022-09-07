@@ -4,6 +4,7 @@ defmodule FinalProjectWeb.Router do
   alias FinalProjectWeb.Plugs.PopulateAuth
   alias FinalProjectWeb.Plugs.ProtectGraphQL
   alias FinalProjectWeb.Plugs.Redirector
+  alias FinalProjectWeb.PageController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -21,6 +22,7 @@ defmodule FinalProjectWeb.Router do
     # get "/", PageController, :index
     get "/auth/test", AuthController, :test
     get "/", AuthController, :new_login
+    get "/registration_page", PageController, :register
     live "/show_all_users", FinalProjectWeb.ShowAllUsersLive
     live "/show_currently_logged_in_user", FinalProjectWeb.ShowCurrentlyLoggedInUser
     # get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user

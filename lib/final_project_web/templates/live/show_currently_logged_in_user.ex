@@ -36,7 +36,6 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
           <input type="submit" value="Delete">
         </form>
 
-
         <h1> Hello <%= @current_logged_in_user.username %> </h1>
         <p><%= @current_logged_in_user.username %>'s ID:
           <strong><%= @current_logged_id %></strong>

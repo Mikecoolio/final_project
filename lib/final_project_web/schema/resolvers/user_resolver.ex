@@ -1,7 +1,7 @@
 defmodule FinalProjectWeb.Schema.Resolvers.UserResolver do
   alias FinalProject.Auth
-  # alias FinalProjectWeb.Utils
-  # alias FinalProjectWeb.Constants
+  # alias FinalProjectWeb.FormatErrorMessages
+  # alias FinalProjectWeb.ErrorMessages
 
   # THE FUNCTION BELOW HAS BEEN MOVED TO auth.ex
 
@@ -9,10 +9,10 @@ defmodule FinalProjectWeb.Schema.Resolvers.UserResolver do
   #   case Auth.create_user(input) do
   #     {:ok, _} -> {:ok, true}
   #     {:errors, %Ecto.Changeset{} = changeset} ->
-  #       errors = Utils.format_changeset_errors(changeset)
+  #       errors = FormatErrorMessages.format_changeset_errors(changeset)
   #       {:errors, errors}
 
-  #     {_, _} -> {:error, Constants.internal_server_error()}
+  #     {_, _} -> {:error, ErrorMessages.internal_server_error()}
   #   end
   # end
 

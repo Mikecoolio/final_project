@@ -1,4 +1,4 @@
-defmodule FinalProjectWeb.Constants do
+defmodule FinalProjectWeb.ErrorMessages do
   @internal_server_error "Internal Server Error"
   @not_authorized "Not Authorized"
   @invalid_credentials "Invalid Credentials"

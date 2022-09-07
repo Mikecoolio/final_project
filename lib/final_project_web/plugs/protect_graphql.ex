@@ -3,7 +3,7 @@ defmodule FinalProjectWeb.Plugs.ProtectGraphQL do
 
   alias FinalProject.Auth
   alias FinalProject.Auth.User
-  alias FinalProjectWeb.Constants
+  alias FinalProjectWeb.ErrorMessages
 
   def init(_params) do
   end
@@ -26,12 +26,12 @@ defmodule FinalProjectWeb.Plugs.ProtectGraphQL do
           |> Absinthe.Plug.put_options(context: %{current_user: user})
 
         _ ->
-          send_resp(conn, 401, Constants.not_authenticated())
+          send_resp(conn, 401, ErrorMessages.not_authenticated())
           conn
           |> halt()
       end
     else # when no user_id is found then close the connection because the user has been logged out/disconnected
-      send_resp(conn, 401, Constants.not_authenticated())
+      send_resp(conn, 401, ErrorMessages.not_authenticated())
 
       conn
       |> halt()

@@ -1,7 +1,8 @@
-defmodule FinalProjectWeb.Utils do
+defmodule FinalProjectWeb.FormatErrorMessages do
   import Ecto.Changeset
 
   def format_changeset_errors(%Ecto.Changeset{} = changeset) do
+    # https://hexdocs.pm/ecto/Ecto.Changeset.html#traverse_errors/2
     errors =
     traverse_errors(changeset, fn {msg, opts} ->
       Regex.replace(~r"%{(\w+)}", msg, fn _, key ->

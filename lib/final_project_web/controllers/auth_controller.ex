@@ -4,8 +4,8 @@ defmodule FinalProjectWeb.AuthController do
 
   alias FinalProject.Auth
   alias FinalProject.Auth.User
-  alias FinalProjectWeb.Utils
-  alias FinalProjectWeb.Constants
+  alias FinalProjectWeb.FormatErrorMessages
+  alias FinalProjectWeb.ErrorMessages
 
   plug :prevent_exploits when action in [:login, :register]
   plug :prevent_consecutive_unauthorized_actions when action in [:logout, :get_current_logged_in_user]
@@ -27,11 +27,11 @@ defmodule FinalProjectWeb.AuthController do
 
         {:error, changeset} ->
           render(conn, "errors.json", %{
-           errors: Utils.format_changeset_errors(changeset)
+           errors: FormatErrorMessages.format_changeset_errors(changeset)
         })
 
         {_, _} ->
-          render(conn, "errors.json", %{message: Constants.internal_server_error()})
+          render(conn, "errors.json", %{message: ErrorMessages.internal_server_error()})
     end
   end
 
@@ -67,21 +67,21 @@ defmodule FinalProjectWeb.AuthController do
             # IO.puts("user")
             # IO.inspect(user)
           else
-            render(conn, "errors.json", %{errors: Constants.invalid_credentials()})
+            render(conn, "errors.json", %{errors: ErrorMessages.invalid_credentials()})
           end
 
         _ ->
-          render(conn, "errors.json", %{errors: Constants.invalid_credentials()})
+          render(conn, "errors.json", %{errors: ErrorMessages.invalid_credentials()})
       end
 
     # {%Ecto.Changeset{valid?: false} = changeset} ->
     {:error, %Ecto.Changeset{} = changeset} ->
       render(conn, "errors.json", %{
-        errors: Utils.format_changeset_errors(changeset)
+        errors: FormatErrorMessages.format_changeset_errors(changeset)
       })
 
     {_, _} ->
-      render(conn, "errors.json", %{message: Constants.internal_server_error()})
+      render(conn, "errors.json", %{message: ErrorMessages.internal_server_error()})
     end
   end
 
@@ -102,7 +102,7 @@ defmodule FinalProjectWeb.AuthController do
     if conn.assigns.user_signed_in? do
       conn
     else
-      send_resp(conn, 401, Constants.not_authenticated())
+      send_resp(conn, 401, ErrorMessages.not_authenticated())
 
       conn
       |> halt()
@@ -111,7 +111,7 @@ defmodule FinalProjectWeb.AuthController do
 
   defp prevent_exploits(conn, _params) do
     if conn.assigns.user_signed_in? do
-      send_resp(conn, 401, Constants.not_authorized())
+      send_resp(conn, 401, ErrorMessages.not_authorized())
 
       conn
       |> halt()
