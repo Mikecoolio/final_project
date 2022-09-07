@@ -10,11 +10,20 @@ defmodule FinalProjectWeb.Plugs.PopulateAuth do
     # the params is empty in init(params)
   end
 
-  def call(conn, _params) do
+  def call(conn, params) do
+    IO.puts("params inside call() populate_auth.ex:")
+    IO.inspect(params)
+
     IO.puts("conn inside call() populate_auth.ex:")
     IO.inspect(conn)
 
-    user_id = Plug.Conn.get_session(conn, :current_user_id)
+    # IO.puts("Plug.Conn.fetch_query_params(conn) inside call() populate_auth.ex:")
+    # IO.inspect(Plug.Conn.fetch_query_params(conn))
+
+    user_id = Plug.Conn.get_session(conn, :current_user)
+
+    IO.puts("user_id inside call() populate_auth.ex:")
+    IO.inspect(user_id)
 
     if user_id do
       user = Auth.get_user!(user_id)

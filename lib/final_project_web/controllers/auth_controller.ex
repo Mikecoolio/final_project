@@ -23,7 +23,8 @@ defmodule FinalProjectWeb.AuthController do
   def register(conn, params) do
     case Auth.create_user(params) do
       {:ok, _} ->
-        render(conn, "acknowledge.json", %{message: "User Registered!"})
+        # render(conn, "acknowledge.json", %{message: "User Registered!"})
+        redirect(conn, to: "/")
 
         {:error, changeset} ->
           render(conn, "errors.json", %{
@@ -109,16 +110,21 @@ defmodule FinalProjectWeb.AuthController do
     end
   end
 
-  defp prevent_exploits(conn, _params) do
+  defp prevent_exploits(conn, params) do
     if conn.assigns.user_signed_in? do
       send_resp(conn, 401, ErrorMessages.not_authorized())
 
       conn
       |> halt()
     else
-      IO.puts("conn")
+      IO.puts("params inside prevent_exploits() auth_controller")
+      IO.inspect(params)
+
+      IO.puts("conn inside prevent_exploits() auth_controller")
       IO.inspect(conn)
       conn
+
+      # Plug.Conn.assign(conn, :current_user, )
     end
   end
 end

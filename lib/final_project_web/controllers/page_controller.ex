@@ -10,23 +10,13 @@ defmodule FinalProjectWeb.PageController do
     render(conn, "index.html")
   end
 
-  def register(conn, params) do
-    IO.puts("params: ")
-    IO.inspect(params)
+  def register(conn, _params) do
+    # IO.puts("params inside /page_controller#register: ")
+    # IO.inspect(params)
+
+    # IO.inspect("conn inside /page_controller#register: ")
+    # IO.inspect(conn)
 
     render(conn, "register.html", error_message: nil)
-  #   case Auth.create_user(params) do
-  #     {:ok, _} ->
-  #       render(conn, "acknowledge.json", %{message: "User Registered!"})
-
-  #       # {:error, changeset} ->
-  #       #   render(conn, "errors.json", %{
-  #       #    errors: FormatErrorMessages.format_changeset_errors(changeset)
-  #       # })
-
-  #       {_, _} ->
-  #         render(conn, "errors.json", %{message: ErrorMessages.internal_server_error()})
-  #   end
-  # end
   end
 end
