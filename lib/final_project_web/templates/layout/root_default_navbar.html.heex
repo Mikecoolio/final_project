@@ -1,14 +1,6 @@
       <section class="container">
         <nav>
           <ul>
-            <p>Navbar</p>
-             <li><a href="/">Login To Acccount</a></li>
-             <li><a href="/">Register Account</a></li>
-             <li><a href="/api/auth/logout">Logout</a></li>
-             <li><a href="/show_all_users">Show All Users</a></li>
-
-    
-
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
@@ -29,3 +21,9 @@
 <textarea name="comments" maxlength="500"></textarea>
 </label>
 </p>
+
+
+             <li><a href="/">Login To Acccount</a></li>
+             <li><a href="/">Register Account</a></li>
+             <li><a href="/api/auth/logout">Logout</a></li>
+             <li><a href="/show_all_users">Show All Users</a></li>

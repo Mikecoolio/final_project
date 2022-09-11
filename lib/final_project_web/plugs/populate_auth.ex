@@ -20,7 +20,7 @@ defmodule FinalProjectWeb.Plugs.PopulateAuth do
     # IO.puts("Plug.Conn.fetch_query_params(conn) inside call() populate_auth.ex:")
     # IO.inspect(Plug.Conn.fetch_query_params(conn))
 
-    user_id = Plug.Conn.get_session(conn, :current_user)
+  user_id = Plug.Conn.get_session(conn, :current_user_id)
 
     IO.puts("user_id inside call() populate_auth.ex:")
     IO.inspect(user_id)

@@ -9,6 +9,7 @@ defmodule FinalProjectWeb.AuthView do
     %{success: false, errors: errors}
   end
 
+  # only for api, not local
   def render("get_current_logged_in_user.json", %{current_user: current_user}) do
     %{
       success: true,

@@ -14,7 +14,7 @@ defmodule FinalProjectWeb.FormatErrorMessages do
       Enum.map(errors, fn {key, value}
       ->
         formatter_error = "#{key} #{value}"
-        formatter_error
+        # formatter_error
         IO.inspect(key)
         IO.inspect(value)
     end)

@@ -32,6 +32,7 @@ defmodule FinalProjectWeb.ShowAllUsersLive do
     end
   end
 
+
   def render(assigns) do
     ~H"""
     <head>

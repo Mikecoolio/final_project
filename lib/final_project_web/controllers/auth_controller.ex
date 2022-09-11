@@ -8,23 +8,23 @@ defmodule FinalProjectWeb.AuthController do
   alias FinalProjectWeb.ErrorMessages
 
   plug :prevent_exploits when action in [:login, :register]
-  plug :prevent_consecutive_unauthorized_actions when action in [:logout, :get_current_logged_in_user]
+  plug :prevent_consecutive_unauthorized_actions when action in [:logout]
 
-  def test(conn, _params) do
-    render(conn, "acknowledge.json", %{message: "hello testing"})
-  end
+  # def test(conn, _params) do
+  #   render(conn, "acknowledge.json", %{message: "hello testing"})
+  # end
 
   def new_login(conn, _) do
     render(conn, "new.html", error_message: nil)
   end
 
   # https://hexdocs.pm/phoenix_html/2.14.3/Phoenix.HTML.Form.html#module-with-changeset-data
-
   def register(conn, params) do
     case Auth.create_user(params) do
-      {:ok, _} ->
-        # render(conn, "acknowledge.json", %{message: "User Registered!"})
-        redirect(conn, to: "/")
+        {:ok, user} ->
+          conn
+          |> put_session(:current_user_id, user.id)
+          |> redirect(to: "/show_all_users")
 
         {:error, changeset} ->
           render(conn, "errors.json", %{
@@ -60,7 +60,6 @@ defmodule FinalProjectWeb.AuthController do
             |> put_status(:created)
             |> put_session(:current_user_id, user.id)
             |> redirect(to: "/show_all_users")
-            # |> render("acknowledge.json", %{message: "Logged In"})
 
             # IO.puts("conn")
             # IO.inspect(conn)
@@ -75,7 +74,6 @@ defmodule FinalProjectWeb.AuthController do
           render(conn, "errors.json", %{errors: ErrorMessages.invalid_credentials()})
       end
 
-    # {%Ecto.Changeset{valid?: false} = changeset} ->
     {:error, %Ecto.Changeset{} = changeset} ->
       render(conn, "errors.json", %{
         errors: FormatErrorMessages.format_changeset_errors(changeset)
@@ -90,10 +88,9 @@ defmodule FinalProjectWeb.AuthController do
     conn
     |> Plug.Conn.clear_session()
     |> redirect(to: "/")
-    # |> render("acknowledge.json", %{message: "Logged Out"})
   end
 
-  def get_current_logged_in_user(conn, _params) do
+  def get_current_logged_in_user(conn, _params) do # only for api, not local
     render(conn, "get_current_logged_in_user.json", %{current_user: conn.assigns.current_user })
   end
 
@@ -122,9 +119,8 @@ defmodule FinalProjectWeb.AuthController do
 
       IO.puts("conn inside prevent_exploits() auth_controller")
       IO.inspect(conn)
-      conn
 
-      # Plug.Conn.assign(conn, :current_user, )
+      conn
     end
   end
 end

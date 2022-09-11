@@ -3,7 +3,7 @@ defmodule FinalProjectWeb.Router do
   alias FinalProjectWeb.AuthController
   alias FinalProjectWeb.Plugs.PopulateAuth
   alias FinalProjectWeb.Plugs.ProtectGraphQL
-  alias FinalProjectWeb.Plugs.Redirector
+  # alias FinalProjectWeb.Plugs.Redirector
   alias FinalProjectWeb.PageController
 
   pipeline :browser do
@@ -20,16 +20,10 @@ defmodule FinalProjectWeb.Router do
     pipe_through :browser
 
     # get "/", PageController, :index
-    get "/auth/test", AuthController, :test
     get "/", AuthController, :new_login
     get "/registration_page", PageController, :register
     live "/show_all_users", FinalProjectWeb.ShowAllUsersLive
     live "/show_currently_logged_in_user", FinalProjectWeb.ShowCurrentlyLoggedInUser
-    # get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user
-    # get "auth/login", AuthController, :random
-    # post "/auth/register", AuthController, :register
-    # post "/auth/login", AuthController, :login
-    # delete "auth/logout", AuthController, :logout
   end
 
   pipeline :api do
@@ -53,8 +47,8 @@ defmodule FinalProjectWeb.Router do
   scope "/api/" do
     pipe_through :api
 
-    get "/auth/test", AuthController, :test
-    get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user
+    # get "/auth/test", AuthController, :test
+    get "/auth/get_current_logged_in_user", AuthController, :get_current_logged_in_user # only for api, not local
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     delete "/auth/logout", AuthController, :logout

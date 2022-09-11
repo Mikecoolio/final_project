@@ -29,6 +29,7 @@ defmodule FinalProject.Auth do
     )
   end
 
+  @spec get_user!(any) :: any
   @doc """
   Gets a single user.
 
