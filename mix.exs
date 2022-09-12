@@ -5,7 +5,7 @@ defmodule FinalProject.MixProject do
     [
       app: :final_project,
       version: "0.1.0",
-      elixir: "~> 1.12",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       # compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -33,11 +33,11 @@ defmodule FinalProject.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.11"},
+      {:phoenix, "~> 1.6"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_html, "~> 3.2"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.17.5"},
       {:floki, ">= 0.30.0", only: :test},
@@ -51,11 +51,10 @@ defmodule FinalProject.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:argon2_elixir, "~> 3.0"},
       # {:timex, "~> 3.7"},
-      # {:ex_cldr, "~> 2.33"},
 
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
-      {:absinthe_phoenix, "~> 2.0.0"},
+      {:absinthe_phoenix, "~> 2.0"}
     ]
   end
 

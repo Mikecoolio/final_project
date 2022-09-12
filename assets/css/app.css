@@ -120,7 +120,7 @@
 }
 
 .centerme {
-  max-width: 500px;
+  max-width: 400px;
   margin: auto;
 }
 
@@ -201,4 +201,12 @@ margin-top: 1.8em;
 .myForm button:hover {
 background: #ccc;
 cursor: pointer;
+}
+
+#app-name-welcome {
+  text-align: center;
+}
+
+.center-contents {
+  text-align: center;
 }
