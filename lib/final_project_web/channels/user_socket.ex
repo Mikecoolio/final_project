@@ -19,7 +19,7 @@ defmodule FinalProjectWeb.UserSocket do
   # See the [`Channels guide`](https://hexdocs.pm/phoenix/channels.html)
   # for further details.
 
-  channel "water_cooler:*", FinalProjectWeb.ChatBoxChannel
+  channel "chat_box:*", FinalProjectWeb.ChatRoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

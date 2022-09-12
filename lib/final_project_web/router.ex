@@ -3,7 +3,6 @@ defmodule FinalProjectWeb.Router do
   alias FinalProjectWeb.AuthController
   alias FinalProjectWeb.Plugs.PopulateAuth
   alias FinalProjectWeb.Plugs.ProtectGraphQL
-  # alias FinalProjectWeb.Plugs.Redirector
   alias FinalProjectWeb.PageController
 
   pipeline :browser do
@@ -13,7 +12,6 @@ defmodule FinalProjectWeb.Router do
     plug :put_root_layout, {FinalProjectWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    # plug Redirector
   end
 
   scope "/" do
@@ -22,8 +20,15 @@ defmodule FinalProjectWeb.Router do
     # get "/", PageController, :index
     get "/", AuthController, :new_login
     get "/registration_page", PageController, :register
+    # get "/chat_box", PageController, :index
+    get "/chat_box", AuthController, :show_chatbox
+    # live "/chat_box", FinalProjectWeb.ChatMessagesLive
     live "/show_all_users", FinalProjectWeb.ShowAllUsersLive
     live "/show_currently_logged_in_user", FinalProjectWeb.ShowCurrentlyLoggedInUser
+
+    # live_session :default, on_mount: [{FinalProjectWeb.AuthController, :current_user}] do
+    #   live "chat_messages", FinalProjectWeb.ChatMessagesLive
+    # end
   end
 
   pipeline :api do

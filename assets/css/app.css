@@ -1,5 +1,5 @@
 /* This file is for your main application CSS */
-@import "./phoenix.css";
+/* @import "./phoenix.css"; */
 
 /* Alerts and form errors used by phx.new */
 .alert {
@@ -209,4 +209,20 @@ cursor: pointer;
 
 .center-contents {
   text-align: center;
+}
+
+/* #register-user-form {
+
+} */
+
+/* #overall-container-registration-page {
+  text-align: center;
+} */
+
+#chatbox {
+  border: 1px #000 solid;
+  padding: 0 0 0 5px;
+  min-height: 157px;
+  max-height: 225px;
+  overflow: scroll;
 }

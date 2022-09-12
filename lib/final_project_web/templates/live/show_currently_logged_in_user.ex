@@ -16,8 +16,8 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
     # IO.inspect(current_logged_id)
 
     get_entire_user = Auth.get_user!(current_logged_id)
-    IO.puts("get_entire_user")
-    IO.inspect(get_entire_user)
+    # IO.puts("get_entire_user")
+    # IO.inspect(get_entire_user)
 
     socket = assign(socket, current_logged_id: current_logged_id, current_logged_in_user: get_entire_user)
     {:ok, socket}
@@ -51,8 +51,11 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
         <li>
           <%= @current_logged_in_user.inserted_at %>
         </li>
-
+        <li>
+          <button><a href="/chat_box">Go to ChatBox</a></button>
+        </li>
       </div>
+
     """
   end
 end

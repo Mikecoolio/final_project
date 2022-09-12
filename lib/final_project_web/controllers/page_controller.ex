@@ -1,13 +1,14 @@
 defmodule FinalProjectWeb.PageController do
   use FinalProjectWeb, :controller
-
+  alias FinalProject.Chatrooms
   # alias FinalProject.Auth
   # alias FinalProject.Auth.User
   # alias FinalProjectWeb.FormatErrorMessages
   # alias FinalProjectWeb.ErrorMessages
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    messages = Chatrooms.list_messages()
+    render(conn, "index.html", messages: messages)
   end
 
   def register(conn, _params) do

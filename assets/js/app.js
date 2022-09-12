@@ -27,9 +27,9 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import "./user_socket.js"
 import socket from "./user_socket"
-// import ChatBox from "./chat_box"
+import ChatRoom from "./chat_room"
 
-ChatBox.init(socket)
+ChatRoom.init(socket)
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})

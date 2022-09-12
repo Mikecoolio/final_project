@@ -1,11 +1,14 @@
 defmodule FinalProjectWeb.AuthController do
   use FinalProjectWeb, :controller
   import Plug.Conn
+  import Phoenix.LiveView.Controller
 
   alias FinalProject.Auth
   alias FinalProject.Auth.User
   alias FinalProjectWeb.FormatErrorMessages
   alias FinalProjectWeb.ErrorMessages
+  alias Phoenix.LiveView
+  alias FinalProjectWeb.Router.Helpers, as: Routes
 
   plug :prevent_exploits when action in [:login, :register]
   plug :prevent_consecutive_unauthorized_actions when action in [:logout]
@@ -16,6 +19,22 @@ defmodule FinalProjectWeb.AuthController do
 
   def new_login(conn, _) do
     render(conn, "new.html", error_message: nil)
+  end
+
+  # def clicked_chatbox_button(conn, params) do
+  #   IO.puts("params inside clicked_chatbox_button")
+  #   IO.inspect(params)
+  #   conn
+  #   # |> put_session()
+  #   # render(conn, "acknowledge.json", message: "clicked chatbox button")
+  #   # |> redirect(to: "/chat_box")
+  # end
+
+  def show_chatbox(conn, _params) do
+    # live_render(conn, FinalProjectWeb.ChatMessagesLive, session: %{
+    #   "current_user_id" => get_session(conn, :user_id)
+    # })
+    live_render(conn, FinalProjectWeb.ChatMessagesLive)
   end
 
   # https://hexdocs.pm/phoenix_html/2.14.3/Phoenix.HTML.Form.html#module-with-changeset-data
@@ -94,6 +113,27 @@ defmodule FinalProjectWeb.AuthController do
     render(conn, "get_current_logged_in_user.json", %{current_user: conn.assigns.current_user })
   end
 
+  def on_mount(:current_user, _params, session, socket) do
+    IO.puts("session inside on_mount (auth_controller):")
+    IO.inspect(session)
+
+    user_id = get_session(socket, :user_id)
+    IO.puts("user_id inside on_mount (auth_controller):")
+    IO.inspect(user_id)
+
+    id = get_session(socket, :id)
+    IO.puts("id inside on_mount (auth_controller):")
+    IO.inspect(id)
+
+    case session do
+      %{"user_id" => user_id} ->
+        {:cont, LiveView.assign_new(socket, :current_user, fn -> Auth.get_user!(user_id) end)}
+
+      %{} ->
+        {:cont, LiveView.assign(socket, :current_user, nil)}
+    end
+  end
+
   # https://hexdocs.pm/plug/Plug.Conn.html#module-request-fields
   # if the user is signed in then keep the connection else close the connection
   defp prevent_consecutive_unauthorized_actions(conn, _params) do
@@ -123,4 +163,6 @@ defmodule FinalProjectWeb.AuthController do
       conn
     end
   end
+
+
 end

@@ -1,11 +1,11 @@
-defmodule FinalProjectWeb.ChatBoxChannelTest do
+defmodule FinalProjectWeb.ChatRoomChannelTest do
   use FinalProjectWeb.ChannelCase
 
   setup do
     {:ok, _, socket} =
       FinalProjectWeb.UserSocket
       |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(FinalProjectWeb.ChatBoxChannel, "chat_box:lobby")
+      |> subscribe_and_join(FinalProjectWeb.ChatRoomChannel, "chat_box:lobby")
 
     %{socket: socket}
   end

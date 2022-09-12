@@ -1,5 +1,7 @@
-defmodule FinalProjectWeb.ChatBoxChannel do
+defmodule FinalProjectWeb.ChatRoomChannel do
   use FinalProjectWeb, :channel
+
+  alias FinalProject.Chatrooms
 
   @impl true
   # def join("chat_box:lobby", _payload, socket) do
@@ -10,7 +12,7 @@ defmodule FinalProjectWeb.ChatBoxChannel do
   #   # end
   # end
 
-  def join("water_cooler:lobby", _payload, socket) do
+  def join("chat_box:lobby", _payload, socket) do
     {:ok, socket}
   end
 
@@ -25,12 +27,13 @@ defmodule FinalProjectWeb.ChatBoxChannel do
   # broadcast to everyone in the current topic (chat_box:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
+    Chatrooms.create_message(payload)
     broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
-  end
+  # defp authorized?(_payload) do
+  #   true
+  # end
 end
