@@ -15,8 +15,8 @@ defmodule FinalProjectWeb.FormatErrorMessages do
       ->
         formatter_error = "#{key} #{value}"
         # formatter_error
-        IO.inspect(key)
-        IO.inspect(value)
+        # IO.inspect(key)
+        # IO.inspect(value)
     end)
 
     formatted_errors

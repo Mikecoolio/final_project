@@ -7,20 +7,20 @@ defmodule FinalProjectWeb.ShowAllUsersLive do
     IO.puts("users:")
     # @users = Auth.list_users()
     users = Auth.list_users()
-    IO.inspect(length(users))
+    # IO.inspect(length(users))
     user_length = length(users)
 
-    IO.puts("socket inside show-all-users-live:")
-    IO.inspect(socket)
+    # IO.puts("socket inside show-all-users-live:")
+    # IO.inspect(socket)
 
-    IO.puts("session inside show-all-users-live:")
-    IO.inspect(session)
+    # IO.puts("session inside show-all-users-live:")
+    # IO.inspect(session)
 
     if map_size(session) > 1 do
       session_map = Map.values(session)
       current_logged_id = List.last(session_map)
 
-      IO.inspect(current_logged_id, label: "current_logged_id")
+      # IO.inspect(current_logged_id, label: "current_logged_id")
       socket = assign(socket, users_length: user_length, users: Auth.list_users(), current_logged_user_id: current_logged_id, no_user_logged_in: nil)
       {:ok, socket}
     else

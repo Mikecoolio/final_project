@@ -16,8 +16,8 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
     # IO.inspect(current_logged_id)
 
     get_entire_user = Auth.get_user!(current_logged_id)
-    IO.puts("get_entire_user")
-    IO.inspect(get_entire_user)
+    # IO.puts("get_entire_user")
+    # IO.inspect(get_entire_user)
 
     socket = assign(socket, current_logged_id: current_logged_id, current_logged_in_user: get_entire_user)
     {:ok, socket}
@@ -25,7 +25,7 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
 
 
   def render(assigns) do
-    ~H"""
+    ~L"""
       <head>
         <link rel="stylesheet" href="assets/css/app.css">
       </head>
@@ -52,6 +52,8 @@ defmodule FinalProjectWeb.ShowCurrentlyLoggedInUser do
           <%= @current_logged_in_user.inserted_at %>
         </li>
 
+        <%= link("Edit", to: "/edit_user") %>
+      </a>
       </div>
     """
   end

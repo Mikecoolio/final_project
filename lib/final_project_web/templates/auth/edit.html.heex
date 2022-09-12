@@ -1,0 +1,18 @@
+<%= form_for @changeset, Routes.auth_path(@conn, :update), [method: "patch"], fn f -> %>
+  <label>
+    Current Username: <%= text_input f, :current_username %>
+  </label>
+
+  <label>
+    New Username: <%= text_input f, :new_username %>
+  </label>
+
+  <label>
+    Email: <%= text_input f, :email %>
+  </label>
+
+  <label>
+    Password: <%= text_input f, :password %>
+  </label>
+  <%= submit "Update User" %>
+<% end %>

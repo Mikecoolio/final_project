@@ -36,8 +36,29 @@ defmodule FinalProjectWeb.AuthController do
     end
   end
 
+  def edit(conn, params) do
+    # https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html
+    changeset = User.changeset(%User{}, params)
+    render conn, "edit.html", changeset: changeset
+  end
+
+  def update(conn, %{"_csrf_token" => _csrf_token, "_method" => "patch", "user" => %{"current_username" => current_username, "email" => email, "password" => password, "new_username" => username}}) do
+    # IO.puts("params.username inside update in auth_controller.ex: ")
+    # IO.inspect(username)
+    user = Auth.get_by_username(current_username)
+    # IO.puts("original username of user inside update")
+    # IO.inspect(user.username)
+
+    if user.username === current_username do
+      Auth.update_user(user, %{"email" => email, "password" => password, "username" => username})
+      redirect(conn, to: "/show_all_users")
+    else
+      render(conn, "errors.json", %{message: ErrorMessages.not_authorized()})
+    end
+  end
+
   def login(conn, params) do
-    IO.inspect(params)
+    # IO.inspect(params)
     # IO.puts("conn: ")
     # IO.inspect(conn)
 
@@ -90,6 +111,7 @@ defmodule FinalProjectWeb.AuthController do
     |> redirect(to: "/")
   end
 
+  @spec get_current_logged_in_user(Plug.Conn.t(), any) :: Plug.Conn.t()
   def get_current_logged_in_user(conn, _params) do # only for api, not local
     render(conn, "get_current_logged_in_user.json", %{current_user: conn.assigns.current_user })
   end
@@ -114,11 +136,11 @@ defmodule FinalProjectWeb.AuthController do
       conn
       |> halt()
     else
-      IO.puts("params inside prevent_exploits() auth_controller")
-      IO.inspect(params)
+      # IO.puts("params inside prevent_exploits() auth_controller")
+      # IO.inspect(params)
 
-      IO.puts("conn inside prevent_exploits() auth_controller")
-      IO.inspect(conn)
+      # IO.puts("conn inside prevent_exploits() auth_controller")
+      # IO.inspect(conn)
 
       conn
     end

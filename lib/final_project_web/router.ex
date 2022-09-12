@@ -21,7 +21,9 @@ defmodule FinalProjectWeb.Router do
 
     # get "/", PageController, :index
     get "/", AuthController, :new_login
+    get "/edit_user", AuthController, :edit
     get "/registration_page", PageController, :register
+    patch "/update_user", AuthController, :update
     live "/show_all_users", FinalProjectWeb.ShowAllUsersLive
     live "/show_currently_logged_in_user", FinalProjectWeb.ShowCurrentlyLoggedInUser
   end

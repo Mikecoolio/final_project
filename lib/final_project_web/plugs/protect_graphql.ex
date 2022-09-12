@@ -9,8 +9,8 @@ defmodule FinalProjectWeb.Plugs.ProtectGraphQL do
   end
 
   def call(conn, _params) do
-    IO.puts("conn inside call in protext_graphql.ex:")
-    IO.inspect(conn)
+    # IO.puts("conn inside call in protext_graphql.ex:")
+    # IO.inspect(conn)
 
     user_id = Plug.Conn.get_session(conn, :current_user_id)
     # the above line references the user_id to grab the user
